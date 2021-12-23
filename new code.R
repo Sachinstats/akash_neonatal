@@ -8,26 +8,28 @@ library(knitr)
 library(kableExtra)
 library(tidyverse)
 library(tidytext)
-data= read_excel("EXCEL  AKI 27 nov F whole - FINAL.xlsx")
-data1=data[,c(1,24,28,31,41,47,49,51,54,57,59,65,66,67,68,70,71)]#subset
-data1$`oligo=1, poly=2, NR=3`=as.factor(data1$`oligo=1, poly=2, NR=3`)
-data1$`Grade of AKI...54`=as.factor(data1$`Grade of AKI...54`)
+data= read_excel("data.xlsx")
+glimpse(data)
+
+#data1=data[,c(1,24,28,31,41,47,49,51,54,57,59,65,66,67,68,70,71)]#subset
+#data1$`oligo=1, poly=2, NR=3`=as.factor(data1$`oligo=1, poly=2, NR=3`)
+#data1$`Grade of AKI...54`=as.factor(data1$`Grade of AKI...54`)
 #box plot baseline_cr
-p <- ggplot(data1, aes(y=`baseline cr`))+
-  geom_boxplot()+
-labs( y = "Baseline_creatnine")
+p <- ggplot(data, aes(x = , y=baseline_cr)) +
+  geom_boxplot() + scale_y_log10(breaks=c(1:10)) +
+labs( y = "Baseline Creatnine")
 p+ scale_fill_grey() + theme_classic()
 #boxplot baseline_cr with Oligouric
 
-p1<- ggplot(data1, aes(x=`oligo=1, poly=2, NR=3`,y=`baseline cr`,fill=`oligo=1, poly=2, NR=3`
-                       ,color=`oligo=1, poly=2, NR=3`))+
-  geom_boxplot()+
+p1<- ggplot(data, aes(x=oligo_poly_NR,y=baseline_cr,fill=oligo_poly_NR
+                       ,color=oligo_poly_NR))+
+  geom_boxplot()+ scale_y_log10(breaks=c(1:10)) +
   labs( y = "Baseline_creatnine",x="Olioguric")
 p1+ scale_fill_grey() + theme_classic()
 #box plot baseline_cr with grade of AKI
-p2<- ggplot(data1, aes(x=`Grade of AKI...54`,y=`baseline cr`,fill=`Grade of AKI...54`,
-                       ,color=`Grade of AKI...54`))+
-  geom_boxplot()+
+p2<- ggplot(data, aes(x=Grade_of_AKI___51,y=baseline_cr, fill=Grade_of_AKI___51,
+                       ,color=Grade_of_AKI___51))+
+  geom_boxplot()+ scale_y_log10(breaks=c(1:10)) + 
   labs( y = "Baseline_creatnine",x="Stage of AkI")
 p2+ scale_fill_grey() + theme_classic()
 ########barplot Olioguric
